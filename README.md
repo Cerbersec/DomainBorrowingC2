@@ -4,6 +4,8 @@ Domain Borrowing is a new method to hide C2 traffic using CDN. It was first pres
 
 DomainBorrowingC2 is an extension for Cobalt Strike written in C# using Cobalt Strike's [External C2 spec](https://www.cobaltstrike.com/help-externalc2). It is based on [Ryan Hanson](https://twitter.com/ryhanson)'s [ExternalC2](https://github.com/ryhanson/ExternalC2) library and the [Covenant PoC](https://github.com/Dliv3/DomainBorrowing) provided in the Blackhat Asia 2021 slides.
 
+I wrote a [blogpost](https://cerbersec.com/2021/05/18/domain-borrowing.html) about it.
+
 ## ClientC2
 The ClientC2 project is responsible for connecting to the CDN and requesting a stager from ServerC2. It manages communications between Beacon and ServerC2.
 
