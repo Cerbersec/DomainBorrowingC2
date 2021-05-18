@@ -8,12 +8,10 @@ namespace ClientC2.channels
     class DomainBorrowingChannel : IC2Channel
     {
         private readonly HttpsClient _client;
-        private readonly string _url;
         private Dictionary<string, string> headers;
 
         public DomainBorrowingChannel(string url, string sni, int port)
         {
-            this._url = url;
             this._client = new HttpsClient(url, port, sni, false);
             this.headers = new Dictionary<string, string>();
         }

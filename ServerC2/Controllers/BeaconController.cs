@@ -62,7 +62,7 @@ namespace ServerC2
         }
 
         /// <summary>
-        ///     PUT: /beacon
+        ///     POST: /beacon
         ///     Calls the socket channel's SendFrame method
         /// </summary>
         [HttpPost]

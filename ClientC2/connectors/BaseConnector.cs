@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using ClientC2.interfaces;
 
 namespace ClientC2.connectors
@@ -10,10 +11,12 @@ namespace ClientC2.connectors
         /// </summary>
         /// <param name="beaconChannel"></param>
         /// <param name="serverChannel"></param>
-        protected BaseConnector(IC2Channel beaconChannel, IC2Channel serverChannel)
+        /// <param name="sleep"></param>
+        protected BaseConnector(IC2Channel beaconChannel, IC2Channel serverChannel, int sleep)
         {
             BeaconChannel = beaconChannel;
             ServerChannel = serverChannel;
+            Sleep = sleep;
         }
 
         /// <summary>
@@ -36,6 +39,11 @@ namespace ClientC2.connectors
         ///     The channel used for communication with the server
         /// </summary>
         public IC2Channel ServerChannel { get; protected set; }
+
+        /// <summary>
+        ///     The amount of time in milliseconds between messages
+        /// </summary>
+        public int Sleep { get; protected set; }
 
         /// <summary>
         ///     The initialization method implemented by the inheriting connection
@@ -64,6 +72,7 @@ namespace ClientC2.connectors
                 {
                     if (!BeaconChannel.ReadAndSendTo(ServerChannel)) break;
                     if (!ServerChannel.ReadAndSendTo(BeaconChannel)) break;
+                    Thread.Sleep(Sleep);
                 }
                 Console.WriteLine("[!] Stopping loop, no bytes received");
             }

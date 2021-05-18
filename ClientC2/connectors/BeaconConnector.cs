@@ -17,8 +17,8 @@ namespace ClientC2.connectors
         /// </summary>
         /// <param name="pipeName"></param>
         /// <param name="serverChannel"></param>
-        protected BeaconConnector(Guid pipeName, IC2Channel serverChannel)
-            : base(new BeaconChannel(pipeName), serverChannel)
+        protected BeaconConnector(Guid pipeName, IC2Channel serverChannel, int sleep)
+            : base(new BeaconChannel(pipeName), serverChannel, sleep)
         {
         }
 
@@ -27,8 +27,8 @@ namespace ClientC2.connectors
         ///     need to be manually set with SetPipeName()
         /// </summary>
         /// <param name="serverChannel"></param>
-        protected BeaconConnector(IC2Channel serverChannel)
-            : base(new BeaconChannel(), serverChannel)
+        protected BeaconConnector(IC2Channel serverChannel, int sleep)
+            : base(new BeaconChannel(), serverChannel, sleep)
         {
         }
 

