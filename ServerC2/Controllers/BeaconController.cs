@@ -9,9 +9,10 @@ namespace ServerC2
 {
     /// <summary>
     ///     Relays beacon requests/responses to/from the socket channel
+    ///     rid is not used, it is a random generated token sent by beacon to bypass short time CDN caching if not disabled
     /// </summary>
     /// <seealso cref="Controller" />
-    [Route("beacon")]
+    [Route("beacon/{rid?}")]
     public class BeaconController : Controller
     {
         private const string IdHeader = "X-C2-Beacon";

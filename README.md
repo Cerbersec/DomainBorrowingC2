@@ -39,4 +39,3 @@ Launch the server with: `sudo dotnet run --url http://127.0.0.1:80/`. You can cu
 ## Known issues
 
 * ServerC2 currently depends on ClientC2, so make sure to copy the ClientC2 project before running ServerC2.
-* This PoC will not be enhanced or updated at the moment due to possible IP conflicts, however you're free to submit a pull request and add features or functionality.
