@@ -2,6 +2,8 @@
 
 Domain Borrowing is a new method to hide C2 traffic using CDN. It was first presented at Blackhat Asia 2021 by [Junyu Zhou](https://twitter.com/md5_salt) and Tianze Ding. You can find the presentation slides [here](https://www.blackhat.com/asia-21/briefings/schedule/#domain-borrowing-catch-my-c-traffic-if-you-can-22314) and [here](https://i.blackhat.com/asia-21/Thursday-Handouts/as-21-Ding-Domain-Borrowing-Catch-My-C2-Traffic-If-You-Can.pdf).
 
+DomainBorrowingC2 was made as part of an internship at [NVISO Security](https://nviso.eu/en)'s Red Team. Follow their work on [their blog](https://blog.nviso.eu) and [Twitter](https://twitter.com/NVISO_Labs).
+
 DomainBorrowingC2 is an extension for Cobalt Strike written in C# using Cobalt Strike's [External C2 spec](https://www.cobaltstrike.com/help-externalc2). It is based on [Ryan Hanson](https://twitter.com/ryhanson)'s [ExternalC2](https://github.com/ryhanson/ExternalC2) library and the [Covenant PoC](https://github.com/Dliv3/DomainBorrowing) provided in the Blackhat Asia 2021 slides.
 
 I wrote a [blogpost](https://cerbersec.com/2021/05/18/domain-borrowing.html) about it.
